@@ -1,0 +1,12 @@
+package models
+
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type UserAndSubject struct {
+	ID        primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Subject     *Subject      `bson:"subject" json:"subject"`
+	User     *User      `bson:"user" json:"user"`
+}
+type UserAndSubjects []UserAndSubject

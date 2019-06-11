@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 
-	"CPEProject/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 )
 
 type UserRepositoryMongo struct {

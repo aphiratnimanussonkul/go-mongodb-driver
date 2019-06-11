@@ -1,7 +1,7 @@
 package repository
 
 import (
-  "CPEProject/src/models"
+  "github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 )
 
 //ProfileRepository interface

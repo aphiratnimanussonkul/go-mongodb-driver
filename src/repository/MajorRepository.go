@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"CPEProject/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 )
 
 type MajorRepositoryMongo struct {

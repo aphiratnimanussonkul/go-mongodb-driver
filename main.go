@@ -1,16 +1,9 @@
 package main
 
 import (
-	//"fmt"
-	//   "time"
-	//
-	//  "CPEProject/config"
-	"CPEProject/src/api"
-	"encoding/json"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/api"
 	"fmt"
-
-	//"CPEProject/src/models"
-	//"CPEProject/src/repository"
+	"os"
 	"log"
 	"net/http"
 
@@ -19,15 +12,7 @@ import (
 )
 
 func main() {
-
-	//default Faculty and Major
-	//api.AddSubjectDefault("Computer Network", 523353)
-	//api.AddMajorDefault("Computer Engineering", "Computer Network")
-	//api.AddFacultyDefault("Engineering","Computer Engineering")
-
 	router := mux.NewRouter()
-	//test
-	router.HandleFunc("/test", test).Methods("GET")
 	//Subject
 	router.HandleFunc("/subject/{name}/{code}/{majorName}", api.AddSubject).Methods("GET")
 	router.HandleFunc("/subject/{majorName}", api.GetSubjectByMajor).Methods("GET")
@@ -73,70 +58,14 @@ func main() {
 	router.HandleFunc("/feedback", api.AddFeedback).Methods("POST")
 	//request
 	router.HandleFunc("/request", api.AddRequest).Methods("POST")
-	log.Fatal(http.ListenAndServe(":12345", handlers.CORS(handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD"}), handlers.AllowedOrigins([]string{"*"}))(router)))
+	log.Fatal(http.ListenAndServe(getPort(), handlers.CORS(handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD"}), handlers.AllowedOrigins([]string{"*"}))(router)))
 
 }
-func test(w http.ResponseWriter, req *http.Request) {
-	//
-	body := req.Body
-	fmt.Println(body)
-	json.NewEncoder(w).Encode(body)
-
+func getPort() string {
+	var port = os.Getenv("PORT")
+	if port == "" {
+		port = "12345"
+		fmt.Println("No Port In Heroku " + port)
+	}
+	return ":" + port
 }
-
-// func updateProfile(profileRepository repository.ProfileRepository) {
-//   var p model.Profile
-//   p.ID = "U1"
-//   p.FirstName = "Wuriyanto"
-//   p.LastName = "Musobar"
-//   p.Email = "wuriyanto_musobar@gmail.com"
-//   p.Password = "12345678"
-//   p.CreatedAt = time.Now()
-//   p.UpdatedAt = time.Now()
-
-//   err := profileRepository.Update("U1", &p)
-
-//   if err != nil {
-//     fmt.Println(err)
-//   } else {
-//     fmt.Println("Profile updated..")
-//   }
-// }
-
-// func deleteProfile(profileRepository repository.ProfileRepository) {
-//   err := profileRepository.Delete("U1")
-
-//   if err != nil {
-//     fmt.Println(err)
-//   } else {
-//     fmt.Println("Profile deleted..")
-//   }
-// }
-
-// func getProfiles(w http.ResponseWriter, req *http.Request) {
-// //
-//   fmt.Println("Go Mongo Db")
-
-//   db, err := config.GetMongoDB()
-
-//   if err != nil {
-//     fmt.Println(err)
-//   }
-
-//   profileRepository := repository.NewProfileRepositoryMongo(db, "Profile")
-
-//   //
-//   profiles, err := profileRepository.FindAll()
-
-//   if err != nil {
-//     fmt.Println(err)
-//   }
-
-//   for _, profile := range profiles{
-//     fmt.Println("-----------------------")
-//     fmt.Println(profile.ID)
-//     fmt.Println(profile.FirstName)
-//     fmt.Println(profile.LastName)
-//     fmt.Println(profile.Email)
-//   }
-// }

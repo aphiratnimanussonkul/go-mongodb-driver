@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson"
-	"CPEProject/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 
 )
 

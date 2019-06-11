@@ -1,20 +1,15 @@
 package api
 
 import (
-	"CPEProject/config"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-
-	// "CPEProject/config"
-	"CPEProject/src/models"
-	"CPEProject/src/repository"
-
-	// "CPEProject/src/repository"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/config"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/repository"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
-	// "strings"
 	"time"
 )
 func AddComment(w http.ResponseWriter, req *http.Request)  {

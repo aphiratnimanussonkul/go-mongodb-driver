@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"CPEProject/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

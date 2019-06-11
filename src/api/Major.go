@@ -3,15 +3,14 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/config"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/repository"
 	"github.com/gorilla/mux"
-"net/http"
-"CPEProject/src/models"
-"CPEProject/config"
-"CPEProject/src/repository"
+	"net/http"
 )
 
-
-func AddMajor(w http.ResponseWriter, req *http.Request)  {
+func AddMajor(w http.ResponseWriter, req *http.Request) {
 	//
 	db, err := config.GetMongoDB()
 	if err != nil {
@@ -37,8 +36,7 @@ func AddMajor(w http.ResponseWriter, req *http.Request)  {
 
 }
 
-
-func GetMajorByFaculty(w http.ResponseWriter, req *http.Request)  {
+func GetMajorByFaculty(w http.ResponseWriter, req *http.Request) {
 	//
 	db, err := config.GetMongoDB()
 	if err != nil {
@@ -55,10 +53,9 @@ func GetMajorByFaculty(w http.ResponseWriter, req *http.Request)  {
 	}
 	json.NewEncoder(w).Encode(major)
 
-
 }
 
-func GetMajorByFacultyEmail(w http.ResponseWriter, req *http.Request)  {
+func GetMajorByFacultyEmail(w http.ResponseWriter, req *http.Request) {
 	//
 	db, err := config.GetMongoDB()
 	if err != nil {
@@ -86,7 +83,7 @@ func GetMajorByFacultyEmail(w http.ResponseWriter, req *http.Request)  {
 				continue
 			}
 		}
-		if major.Faculty.Name == facultyName && !isHave{
+		if major.Faculty.Name == facultyName && !isHave {
 			tempMajor = append(tempMajor, major.Name)
 			majors = append(majors, major)
 		}

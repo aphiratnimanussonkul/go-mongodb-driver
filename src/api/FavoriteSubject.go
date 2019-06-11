@@ -1,17 +1,16 @@
 package api
 
 import (
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/config"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/repository"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-"net/http"
-"CPEProject/src/models"
-"CPEProject/config"
-"CPEProject/src/repository"
+	"net/http"
 )
 
-
-func AddFavoriteSubject(w http.ResponseWriter, req *http.Request)  {
+func AddFavoriteSubject(w http.ResponseWriter, req *http.Request) {
 	db, err := config.GetMongoDB()
 	if err != nil {
 		fmt.Println(err)
@@ -39,9 +38,8 @@ func AddFavoriteSubject(w http.ResponseWriter, req *http.Request)  {
 
 }
 
-
 //Default data FavoriteSubject
-func AddFavoriteSubjectDefault(email string, code string)  {
+func AddFavoriteSubjectDefault(email string, code string) {
 	db, err := config.GetMongoDB()
 	if err != nil {
 		fmt.Println(err)

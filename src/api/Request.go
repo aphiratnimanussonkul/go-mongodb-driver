@@ -1,9 +1,9 @@
 package api
 
 import (
-	"CPEProject/config"
-	"CPEProject/src/models"
-	"CPEProject/src/repository"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/config"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
+	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/repository"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"

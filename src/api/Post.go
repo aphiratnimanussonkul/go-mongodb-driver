@@ -168,10 +168,14 @@ func DeletePost(w http.ResponseWriter, req *http.Request) {
 	postRepository := repository.NewPostRepository(db, "Post")
 	params := mux.Vars(req)
 	var postId = string(params["postid"])
-	fmt.Println(postId)
 	postIdHex, err := primitive.ObjectIDFromHex(postId)
 	post , err := postRepository.FindByID(postIdHex)
-	fmt.Println(post)
+	if post.Comment != nil {
+		commentRepository := repository.NewCommentRepository(db, "Comment")
+		for i := 0; i < len(post.Comment); i++ {
+			err = commentRepository.Delete(post.Comment[i].ID)
+		}
+	}
 	err = postRepository.Delete(post)
 	if err != nil {
 	}

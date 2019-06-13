@@ -33,7 +33,7 @@ func (r *FeedbackRepository) Save(feedback *models.Feedback) error{
 
 //Update
 func (r *FeedbackRepository) Update( feedback *models.Feedback) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": feedback.ID}, feedback)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": feedback.ID}, bson.M{"$set": feedback})
 	fmt.Println(res)
 	return err
 }

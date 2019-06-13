@@ -33,7 +33,7 @@ func (r *CommentRepository) Save(comment *models.Comment) error{
 
 //Update
 func (r *CommentRepository) Update(comment *models.Comment) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": comment.ID}, comment)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": comment.ID}, bson.M{"$set": comment})
 	fmt.Println(res)
 	return err
 }

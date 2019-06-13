@@ -31,7 +31,7 @@ func (r *PostRepositoryMongo) Save(post *models.Post) error{
 
 //Update
 func (r *PostRepositoryMongo) Update(post *models.Post) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": post.ID}, post)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": post.ID}, bson.M{"$set": post})
 	fmt.Println(res)
 	return err
 }
@@ -90,7 +90,7 @@ func (r *PostRepositoryMongo) FindByCode(code string) (models.Posts, error){
 	}
 	for cursor.Next(ctx) {
 		var p models.Post
-		if err := cursor.Decode(&post); err != nil {
+		if err := cursor.Decode(&p); err != nil {
 		}
 		post = append(post, p)
 	}

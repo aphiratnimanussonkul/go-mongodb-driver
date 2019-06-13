@@ -31,7 +31,7 @@ func (r *SubjectRepositoryMongo) Save(subject *models.Subject) error{
 
 //Update
 func (r *SubjectRepositoryMongo) Update(subject *models.Subject) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": subject.ID}, subject)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": subject.ID}, bson.M{"$set": subject})
 	fmt.Println(res)
 	return err
 }

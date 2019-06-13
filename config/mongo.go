@@ -9,7 +9,7 @@ import (
 )
 
 func GetMongoDB() (*mongo.Database, error) {
-  uri := "mongodb+srv://admin:admin@cluster0-mpkxk.mongodb.net/test?retryWrites=true&w=majority"
+  uri := "mongodb+srv://admin:admin@cluster0-mpkxk.mongodb.net"
   clientOptions := options.Client().ApplyURI(uri)
 
   // Connect to MongoDB

@@ -52,6 +52,7 @@ func AddComment(w http.ResponseWriter, req *http.Request)  {
 	postIDHex, err := primitive.ObjectIDFromHex(postID)
 	comment, err := commentRepository.FindByID(p.ID)
 	post, err := postRepository.FindByID(postIDHex)
+	fmt.Println(post.ID)
 	post.Comment = append(post.Comment,comment)
 	postRepository.Update(post)
 

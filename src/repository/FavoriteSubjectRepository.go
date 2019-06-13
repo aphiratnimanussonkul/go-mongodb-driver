@@ -30,7 +30,7 @@ func (r *FavoriteSubjectRepositoryMongo) Save(favoriteSubject *models.FavoriteSu
 
 //Update
 func (r *FavoriteSubjectRepositoryMongo) Update(favoriteSubject *models.FavoriteSubject) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": favoriteSubject.ID}, favoriteSubject)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": favoriteSubject.ID}, bson.M{"$set": favoriteSubject})
 	fmt.Println(res)
 	return err
 }

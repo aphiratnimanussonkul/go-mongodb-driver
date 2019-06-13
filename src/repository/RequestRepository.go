@@ -30,7 +30,7 @@ func (r *RequestRepository) Save(request *models.Request) error {
 
 //Update
 func (r *RequestRepository) Update(request *models.Request) error {
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": request.ID}, request)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": request.ID}, bson.M{"$set": request})
 	fmt.Println(res)
 	return err
 }

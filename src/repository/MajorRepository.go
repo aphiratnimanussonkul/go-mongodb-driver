@@ -30,7 +30,7 @@ func (r *MajorRepositoryMongo) Save(major *models.Major) error{
 
 //Update
 func (r *MajorRepositoryMongo) Update(major *models.Major) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": major.ID}, major)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": major.ID}, bson.M{"$set": major})
 	fmt.Println(res)
 	return err
 }

@@ -36,7 +36,7 @@ func (r *FacultyRepositoryMongo) Save(faculty *models.Faculty) error{
 
 //Update
 func (r *FacultyRepositoryMongo) Update(faculty *models.Faculty) error{
-  res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": faculty.ID}, faculty)
+  res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": faculty.ID}, bson.M{"$set": faculty})
   fmt.Println(res)
   return err
 }

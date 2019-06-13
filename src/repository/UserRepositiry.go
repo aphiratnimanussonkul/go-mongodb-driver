@@ -67,9 +67,10 @@ func (r *UserRepositoryMongo) FindAll() (models.Users, error){
 		return nil, err
 	}
 	for cursor.Next(ctx) {
-		// decode the document
-		if err := cursor.Decode(&user); err != nil {
+		var u models.User
+		if err := cursor.Decode(&u); err != nil {
 		}
+		user = append(user, u)
 	}
 	return user, nil
 }

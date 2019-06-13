@@ -58,54 +58,27 @@ func AddComment(w http.ResponseWriter, req *http.Request)  {
 
 }
 
-// func GetFacultyById(w http.ResponseWriter, req *http.Request) {
+func GetCommentAll(w http.ResponseWriter, req *http.Request) {
+	db, err := config.GetMongoDB()
+	if err != nil {
+		fmt.Println(err)
+	}
+	commentRepository := repository.NewCommentRepository(db, "Comment")
+	comment, err2 := commentRepository.FindAll()
+	if err2 != nil {
+		fmt.Println(err2)
+	}
+	json.NewEncoder(w).Encode(comment)
+}
 
-// 	//
-// 	fmt.Println("Go Mongo Db")
-// 	db, err := config.GetMongoDB()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	facultyRepository := repository.NewFacultyRepositoryMongo(db, "Profile")
-// 	//
-// 	params := mux.Vars(req)
-// 	fmt.Println(params["id"])
-
-
-// 	profile, err := facultyRepository.FindByID(params["id"])
-
-// 	fmt.Println("===== 1 =====")
-// 	fmt.Println(profile)
-// 	fmt.Println("===== 2 =====")
-// 	fmt.Println(profile.ID)
-
-
-// }
-
-// func GetFacultyAll(w http.ResponseWriter, req *http.Request) {
-
-// 	//
-// 	fmt.Println("Go Mongo Db")
-// 	db, err := config.GetMongoDB()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	facultyRepository := repository.NewFacultyRepositoryMongo(db, "Faculty")
-// 	post, err2 := facultyRepository.FindAll()
-// 	if err2 != nil {
-// 		fmt.Println(err2)
-// 	}
-// 	json.NewEncoder(w).Encode(post)
-// }
-
-// //Defualt add data
-// func AddFacultyDefualt(facultyname string)  {
-// 	db, err := config.GetMongoDB()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	facultyRepository := repository.NewFacultyRepositoryMongo(db, "Faculty")
-// 	var p models.Faculty
-// 	p.Name = facultyname
-// 	facultyRepository.Save(&p)
-// }
+func DeleteCommentById(w http.ResponseWriter, req *http.Request) {
+	db, err := config.GetMongoDB()
+	if err != nil {
+		fmt.Println(err)
+	}
+	commentRepository := repository.NewCommentRepository(db, "Comment")
+	params := mux.Vars(req)
+	var commentId = string(params["id"])
+	commentIdHex, err := primitive.ObjectIDFromHex(commentId)
+	commentRepository.Delete(commentIdHex)
+}

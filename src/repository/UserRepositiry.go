@@ -2,8 +2,9 @@ package repository
 
 import (
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 
 	"github.com/aphiratnimanussonkul/go-mongodb-driver/src/models"
 )
@@ -27,28 +28,25 @@ func (r *UserRepositoryMongo) Save(user *models.User) error{
 	fmt.Println(res)
 	return  err
 }
-//func (r *UserRepositoryMongo) SaveSubject(subject *models.Subject, user *models.User) error{
-//	err := r.db.Collection(r.collection).Insert(user)
-//	err2 := r.db.Collection(r.collection).Update(bson.M{"subject": subject}, user)
-//	fmt.Println(err2)
-//	return err
-//}
-//Update
+
 func (r *UserRepositoryMongo) Update(user *models.User) error{
-	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": user.ID}, user)
+	fmt.Println(user.ID)
+	fmt.Println(user.Subject)
+	res, err := r.db.Collection(r.collection).UpdateOne(ctx, bson.M{"_id": user.ID}, bson.M{"$set": user})
 	fmt.Println(res)
+	fmt.Println(err)
 	return err
 }
 
 //Delete
-func (r *UserRepositoryMongo) Delete(id bson.ObjectId) error{
+func (r *UserRepositoryMongo) Delete(id primitive.ObjectID) error{
 	res, err := r.db.Collection(r.collection).DeleteOne(ctx, bson.M{"_id": id})
 	fmt.Println(res)
 	return err
 }
 
 //FindByID
-func (r *UserRepositoryMongo) FindByID(id bson.ObjectId) (*models.User, error){
+func (r *UserRepositoryMongo) FindByID(id primitive.ObjectID) (*models.User, error){
 	var user models.User
 	err := r.db.Collection(r.collection).FindOne(ctx, bson.M{"_id": id}).Decode(&user)
 

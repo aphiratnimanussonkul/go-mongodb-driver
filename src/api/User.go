@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"io/ioutil"
 	"net/http"
 )
@@ -56,29 +57,6 @@ func GetUserByEmail(w http.ResponseWriter, req *http.Request)  {
 
 }
 
-//func AddUserSubject(w http.ResponseWriter, req *http.Request)  {
-//	//
-//	db, err := config.GetMongoDB()
-//	if err != nil {
-//		fmt.Println(err)
-//	}
-//	userRepository := repository.NewUserRepository(db, "User")
-//	subjectRepository := repository.NewSubjectRepository(db, "Subject")
-//
-//	//get variable by path
-//	params := mux.Vars(req)
-//	var firstName, lastName, Email string
-//	firstName = string(params["firstName"])
-//	lastName = string(params["lastName"])
-//	Email = string(params["Email"])
-//	var codeSubject = string(params["code"])
-//	subject, err := subjectRepository.FindByCode(codeSubject)
-//	var p models.User
-//	p.Name = firstName + " " + lastName
-//	p.Email = Email
-//	userRepository.SaveSubject(subject, &p)
-//
-//}
 func FollowSubject(w http.ResponseWriter, req *http.Request)  {
 	//
 	db, err := config.GetMongoDB()
@@ -96,6 +74,7 @@ func FollowSubject(w http.ResponseWriter, req *http.Request)  {
 	subject, err := subjectRepository.FindByCode(codeSubject)
 	var status = 1
 	for i := 0; i < len(user.Subject); i++ {
+		fmt.Println("Loop")
 		if user.Subject[i].Code == codeSubject {
 			json.NewEncoder(w).Encode("false")
 			status = 0
@@ -103,7 +82,9 @@ func FollowSubject(w http.ResponseWriter, req *http.Request)  {
 		}
 	}
 	if status == 1 {
+		fmt.Println(user.Subject)
 		user.Subject = append(user.Subject, subject)
+		fmt.Println(user.Subject)
 		userRepository.Update(user)
 	}
 }
@@ -160,4 +141,29 @@ func UnfollowSubject(w http.ResponseWriter, req *http.Request)  {
 	}
 	user.Subject = subjects
 	userRepository.Update(user);
+}
+
+func GetUserAll(w http.ResponseWriter, req *http.Request) {
+	db, err := config.GetMongoDB()
+	if err != nil {
+		fmt.Println(err)
+	}
+	UserRepository := repository.NewUserRepository(db, "User")
+	user, err2 := UserRepository.FindAll()
+	if err2 != nil {
+		fmt.Println(err2)
+	}
+	json.NewEncoder(w).Encode(user)
+}
+
+func DeleteUserById(w http.ResponseWriter, req *http.Request) {
+	db, err := config.GetMongoDB()
+	if err != nil {
+		fmt.Println(err)
+	}
+	UserRepository := repository.NewUserRepository(db, "User")
+	params := mux.Vars(req)
+	var userId = string(params["id"])
+	userIdHex, err := primitive.ObjectIDFromHex(userId)
+	UserRepository.Delete(userIdHex)
 }

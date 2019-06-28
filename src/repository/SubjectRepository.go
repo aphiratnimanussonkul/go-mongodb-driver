@@ -115,7 +115,7 @@ func (r *SubjectRepositoryMongo) FindByMajor (majorName string) (models.Subjects
 
 func (r *SubjectRepositoryMongo) FindByCodeEx(code string) (models.Subjects, error){
 	var subject models.Subjects
-	cursor, err := r.db.Collection(r.collection).Find(ctx, bson.M{"code": primitive.Regex{"", ""}})
+	cursor, err := r.db.Collection(r.collection).Find(ctx, bson.M{"code": primitive.Regex{code, ""}})
 
 	if err != nil {
 	
@@ -131,7 +131,7 @@ func (r *SubjectRepositoryMongo) FindByCodeEx(code string) (models.Subjects, err
 
 func (r *SubjectRepositoryMongo) FindByNameEx(name string) (models.Subjects, error){
 	var subject models.Subjects
-	cursor, err := r.db.Collection(r.collection).Find(ctx, bson.M{"name": primitive.Regex{"", ""}})
+	cursor, err := r.db.Collection(r.collection).Find(ctx, bson.M{"name": primitive.Regex{name, ""}})
 
 	if err != nil {
 

@@ -55,7 +55,8 @@ func main() {
 	router.HandleFunc("/comments", api.GetCommentAll).Methods("GET")
 	router.HandleFunc("/commenttext/{text}", api.AddComment).Methods("GET")
 	router.HandleFunc("/comment/{postID}", api.AddComment).Methods("POST")
-	router.HandleFunc("/deletecomment/{id}", api.DeleteCommentById).Methods("POST")
+	router.HandleFunc("/deletecomment/{id}", api.DeleteCommentById).Methods("GET")
+	router.HandleFunc("/deletecomment/{id}/{postid}", api.DeleteCommentByIdANDPostId).Methods("GET")
 	//feedback
 	router.HandleFunc("/feedback", api.AddFeedback).Methods("POST")
 	//request

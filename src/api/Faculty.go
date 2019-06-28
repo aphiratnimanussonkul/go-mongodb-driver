@@ -46,7 +46,6 @@ func GetFacultyById(w http.ResponseWriter, req *http.Request) {
 func GetFacultyAll(w http.ResponseWriter, req *http.Request) {
 
 	//
-	fmt.Println("Go Mongo Db")
 	db, err := config.GetMongoDB()
 	if err != nil {
 		fmt.Println(err)
@@ -54,14 +53,12 @@ func GetFacultyAll(w http.ResponseWriter, req *http.Request) {
 	facultyRepository := repository.NewFacultyRepositoryMongo(db, "Faculty")
 	faculty, err2 := facultyRepository.FindAll()
 	if err2 != nil {
-		fmt.Println(err2)
 	}
 	json.NewEncoder(w).Encode(faculty)
 }
 
 func GetFacultyByEmail(w http.ResponseWriter, req *http.Request) {
 	//
-	fmt.Println("Go Mongo Db")
 	db, err := config.GetMongoDB()
 	if err != nil {
 		fmt.Println(err)
@@ -98,7 +95,6 @@ func GetFacultyByEmail(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(facultyAll)
 }
 func DeleteFaculty(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("Go Mongo Db")
 	db, err := config.GetMongoDB()
 	if err != nil {
 		fmt.Println(err)

@@ -83,3 +83,27 @@ func DeleteCommentById(w http.ResponseWriter, req *http.Request) {
 	commentIdHex, err := primitive.ObjectIDFromHex(commentId)
 	commentRepository.Delete(commentIdHex)
 }
+
+func DeleteCommentByIdANDPostId(w http.ResponseWriter, req *http.Request) {
+	db, err := config.GetMongoDB()
+	if err != nil {
+		fmt.Println(err)
+	}
+	commentRepository := repository.NewCommentRepository(db, "Comment")
+	postRepository := repository.NewPostRepository(db, "Post")
+	params := mux.Vars(req)
+	var commentId = string(params["id"])
+	var postId = string(params["postid"])
+	postIdHex, err := primitive.ObjectIDFromHex(postId)
+	commentIdHex, err := primitive.ObjectIDFromHex(commentId)
+	post, err := postRepository.FindByID(postIdHex)
+	var comments models.CommentPointer
+	for i := 0; i < len(post.Comment); i++ {
+		if post.Comment[i].ID != commentIdHex {
+			comments = append(comments, post.Comment[i])
+		}
+	}
+	post.Comment = comments
+	postRepository.Update(post)
+	commentRepository.Delete(commentIdHex)
+}

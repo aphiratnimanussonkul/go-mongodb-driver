@@ -11,3 +11,4 @@ type Comment struct {
 
 }
 type Comments []Comment
+type CommentPointer []*Comment

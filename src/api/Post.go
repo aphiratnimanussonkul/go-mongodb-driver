@@ -85,17 +85,17 @@ func AddPost(w http.ResponseWriter, req *http.Request) {
 func getVdoLink (vdoLink []string)  ([]string, string){
 	var vdoLinkAll []string
 	for i := 0; i < len(vdoLink); i++ {
-		//var temp []string
+		var temp []string
 		if vdoLink[i] == "" {
 			continue
 		} else if strings.Contains(vdoLink[i], "https://www.youtube.com/watch?v") {
-			//temp = strings.Split(vdoLink[i], "=");
-			//if strings.Contains(vdoLink[i], "&list") {
-			//	temp = strings.Split(temp[1], "&");
-			//	vdoLink[i] = "https://www.youtube.com/embed/" + temp[0];
-			//} else {
-			//	vdoLink[i] = "https://www.youtube.com/embed/" + temp[1];
-			//}
+			temp = strings.Split(vdoLink[i], "=");
+			if strings.Contains(vdoLink[i], "&list") {
+				temp = strings.Split(temp[1], "&");
+				vdoLink[i] = "https://www.youtube.com/embed/" + temp[0];
+			} else {
+				vdoLink[i] = "https://www.youtube.com/embed/" + temp[1];
+			}
 			vdoLinkAll = append(vdoLinkAll, vdoLink[i])
 		} else {
 			return  nil, "Can not post, Please make sure you enter correct youtube link"

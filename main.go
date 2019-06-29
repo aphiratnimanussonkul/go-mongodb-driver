@@ -59,8 +59,12 @@ func main() {
 	router.HandleFunc("/deletecomment/{id}/{postid}", api.DeleteCommentByIdANDPostId).Methods("GET")
 	//feedback
 	router.HandleFunc("/feedback", api.AddFeedback).Methods("POST")
+	router.HandleFunc("/deletefeedback/{id}", api.DeleteFeedback).Methods("GET")
+	router.HandleFunc("/feedbacks", api.GetFeedbackAll).Methods("GET")
 	//request
 	router.HandleFunc("/request", api.AddRequest).Methods("POST")
+	router.HandleFunc("/deleterequest/{id}", api.DeleteRequest).Methods("GET")
+	router.HandleFunc("/requests", api.GetRequestAll).Methods("GET")
 	log.Fatal(http.ListenAndServe(getPort(), handlers.CORS(handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD"}), handlers.AllowedOrigins([]string{"*"}))(router)))
 
 }
